@@ -12,24 +12,14 @@ class App extends Component {
       nextChar: {},
       prevChar: {}
     };
-    //this.cycleChars = this.cycleChars.bind(this);
   }
 
   componentDidMount() {
-    this.getCharacters(
-      `https://swapi.co/api/people/${this.state.index}/`,
-      "currentChar"
-    );
-    this.getCharacters(
-      `https://swapi.co/api/people/${this.state.prevIndex}/`,
-      "prevChar"
-    );
-    this.getCharacters(
-      `https://swapi.co/api/people/${this.state.nextIndex}/`,
-      "nextChar"
-    );
+    this.getCharacters(`https://swapi.co/api/people/1/`, "currentChar");
+    this.getCharacters(`https://swapi.co/api/people/10/`, "prevChar");
+    this.getCharacters(`https://swapi.co/api/people/2/`, "nextChar");
   }
-  cycleChars(operation) {
+  cycleChars = operation => {
     let { prevChar, currentChar, nextChar } = this.state;
     const { index } = this.state;
     const prevIndex = index - 1 <= 0 ? 10 : index - 1;
@@ -39,19 +29,24 @@ class App extends Component {
       prevChar = currentChar;
       currentChar = nextChar;
       this.getCharacters(
-        `https://swapi.co/api/people/${this.state.nextIndex}/`,
+        `https://swapi.co/api/people/${nextIndex}/`,
         "nextChar"
       );
     } else {
       nextChar = currentChar;
       currentChar = prevChar;
       this.getCharacters(
-        `https://swapi.co/api/people/${this.state.prevIndex}/`,
+        `https://swapi.co/api/people/${prevIndex}/`,
         "prevChar"
       );
     }
     this.setState({ prevChar, currentChar, nextChar });
-  }
+  };
+  updateIndex = operation => {
+    let { index } = this.state;
+    index += operation;
+    this.setState({ index }, () => this.cycleChars());
+  };
 
   getCharacters = (URL, state) => {
     // feel free to research what this code is doing.
@@ -89,9 +84,9 @@ class App extends Component {
         <h1 className="Header">React Wars</h1>
         <h2 className="charHeader">Characters</h2>
         <div className="charContainer">
-          <CarouselArrow />
+          <CarouselArrow updateIndex={this.updateIndex} operation={-1} />
           {char}
-          <CarouselArrow operation={1} />
+          <CarouselArrow updateIndex={this.updateIndex} operation={1} />
         </div>
       </div>
     );
