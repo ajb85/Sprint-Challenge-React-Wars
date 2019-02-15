@@ -2,8 +2,6 @@ import React from "react";
 import "./charCard.css";
 
 export default function CharCard(props) {
-  console.log("imgSrc");
-
   return (
     <div className="charCard">
       <h2>Name:</h2> <p>{props.char.name}</p>
