@@ -1,0 +1,28 @@
+.charCard {
+  max-width: 290px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #cfc9c1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  box-shadow: 7px 7px rgba(50, 50, 50, 0.8);
+  color: #000;
+  transition: 0.5s;
+}
+.charCard:hover {
+  transform: translateY(-1px);
+  filter: saturate(150%);
+}
+.charCard h2 {
+  max-width: 150px;
+  width: 100%;
+  color: #3f2518;
+}
+.charCard p {
+  text-align: left;
+}
